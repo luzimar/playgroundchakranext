@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
     useColorMode,
     Box,
@@ -12,13 +12,13 @@ import {
     StatLabel,
     StatNumber,
     StatHelpText,
-    StatArrow
+    StatArrow,
+    Flex
 } from '@chakra-ui/react';
-import { container, containerCard, marginBottom } from '../styles/Home.module.css';
 import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
 
 const Card = (props) => (
-    <Box className={containerCard} px="10" py="10" rounded="md" shadow="dark-lg" {...props} />
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" px="10" py="10" rounded="md" shadow="dark-lg" {...props} />
 );
 
 export default function Home() {
@@ -30,13 +30,29 @@ export default function Home() {
             title: 'Olá',
             description: 'vc clicou no botão da sorte!',
             status: 'success',
-            duration: 9000,
+            duration: 3000,
             isClosable: true
         });
     });
+    
+    useEffect(() => {
+        function loadUser() {
+            fetch('http://localhost:3000/api/hello').then(response => response.json().then(data => {
+                toast({
+                    title: 'Olá',
+                    description: `Bem vindo ${data.name}`,
+                    status: 'info',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top'
+                });
+            })) 
+        }
+        loadUser();
+    }, []);
 
     return (
-        <div className={container}>
+        <Flex align="center" justify="center" minH="100vh">
             <Card>
                 <Image
                     borderRadius="full"
@@ -51,12 +67,12 @@ export default function Home() {
                     fontWeight="extrabold">
                     Luzimar Oliveira
                 </Text>
-                <Divider className={marginBottom} />
+                <Divider marginBottom="10px" />
                 <Button
+                    marginBottom="10px"
                     colorScheme="whatsapp"
                     leftIcon={colorMode === 'light' ? <FaLightbulb /> : <FaRegLightbulb />}
-                    onClick={onClick}
-                    className={marginBottom}>
+                    onClick={onClick}>
                     {colorMode === 'light' ? 'Apagar' : 'Acender'} a luz
                 </Button>
                 <StatGroup>
@@ -79,6 +95,6 @@ export default function Home() {
                     </Stat>
                 </StatGroup>
             </Card>
-        </div>
+        </Flex>
     );
 }
