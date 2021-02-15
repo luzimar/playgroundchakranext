@@ -33,7 +33,7 @@ export default function Home() {
             duration: 3000,
             isClosable: true
         });
-    }, []);
+    }, [colorMode, toast]);
     
     useEffect(() => {
         function loadUser() {
