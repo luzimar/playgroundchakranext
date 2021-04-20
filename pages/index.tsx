@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, ReactNode } from 'react';
 import {
     useColorMode,
     Box,
@@ -17,8 +17,14 @@ import {
 } from '@chakra-ui/react';
 import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
 
-const Card = (props) => (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" px="10" py="10" rounded="md" shadow="dark-lg" {...props} />
+interface CardProps {
+ children: ReactNode;
+}
+
+const Card = ({ children }: CardProps) => (
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" px="10" py="10" rounded="md" shadow="dark-lg">
+        { children }
+    </Box>
 );
 
 export default function Home() {
